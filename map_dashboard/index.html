@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Dashboard</title>
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  
+  <!-- Script -->
+  <script src="../leaflet-module/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/"></script>
+  <script src="../leaflet-module/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+  <script src="../leaflet-module/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster-src.js"></script>
+  <script src="../leaflet-module/Leaflet.awesome-markers-2.0.5/dist/leaflet.awesome-markers.js"></script>
+  <script src="../leaflet-module/leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.js"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="../leaflet-module/leaflet.css">
+  <link rel="stylesheet" href="../leaflet-module/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="../leaflet-module/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="../leaflet-module/Leaflet.awesome-markers-2.0.5/dist/leaflet.awesome-markers.css">
+  <link rel="stylesheet" href="../leaflet-module/leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="map_view">
+    <div class="search_field" id="search_field">
+      <input type="text" id="search_input" class="search_input" placeholder="Search location..." autocomplete="off">
+      <button class="btn search_button" id="search_button" title="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button class="btn search_cancel" id="search_cancel">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <button class="btn my_location" id="my_location">
+      <i class="fa-solid fa-location"></i>
+    </button>
+  </div>
+
+  <script type="text/javascript" src="./script.js"></script>
+</body>
+</html>

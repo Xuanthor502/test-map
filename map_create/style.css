@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#map {
+  height: 100vh;
+}
+
+.toolbar {
+  position: absolute;
+  right: 10px;
+  top: 100px;
+  z-index: 9999;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(241, 241, 241, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.tool_draw-polygon {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #686868;
+}
+

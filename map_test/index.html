@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Script -->
+    <script src="../leaflet-module/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/"></script>
+    <script src="../leaflet-module/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="../leaflet-module/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster-src.js"></script>
+    <script src="../leaflet-module/Leaflet.awesome-markers-2.0.5/dist/leaflet.awesome-markers.js"></script>
+    <script src="../leaflet-module/leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="../leaflet-module/TileLayer.GeoJSON.js"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="../leaflet-module/leaflet.css">
+    <link rel="stylesheet" href="../leaflet-module/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="../leaflet-module/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="../leaflet-module/Leaflet.awesome-markers-2.0.5/dist/leaflet.awesome-markers.css">
+    <link rel="stylesheet" href="../leaflet-module/leaflet-routing-machine-3.2.12/dist/leaflet-routing-machine.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #map_view {
+            height: 99vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="map_view"></div>
+    <script>
+        // Initialize map
+        const map = L.map("map_view", { zoomControl: false }).setView([36, 140], 5);
+        L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3']
+        }).addTo(map);
+        L.control
+            .zoom({
+                position: "topright",
+            })
+            .addTo(map);
+
+        L.marker([35.70072976522901, 139.81492996215823]).addTo(map)
+            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+
+        L.Routing.control({
+            waypoints: [
+                L.latLng(35.6876918978731, 139.79802131652835),
+                L.latLng(35.70072976522901, 139.81492996215823)
+            ]
+        }).addTo(map);
+
+        map.on("click", (e) => {
+            console.log(e.latlng);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#map_view {
+  height: 99vh;
+}
+
+.btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    &::before {
+      font-size: 16px;
+    }
+  }
+}
+
+.my_location {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+}
+
+
+.search_field {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 9999;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 6px;
+  border-radius: 99px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  transition: width 0.4s ease-in-out;
+  width: 56px;
+
+  &.active {
+    width: 320px;
+    justify-content: space-between;
+    padding-left: 18px;
+
+    .search_input {
+      width: 240px;
+      opacity: 1;
+    }
+
+    .search_button {
+      background: #f1f1f1;
+    }
+
+    .search_cancel {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  /* Search input */
+  .search_input {
+    flex-shrink: 0;
+    width: 0;
+    height: 34px;
+    border-radius: 4px;
+    background: #ffffff;
+    border: none;
+    outline: none;
+
+    font-size: 14px;
+    line-height: 16px;
+    transition: width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    opacity: 0;
+
+    &:focus-visible {
+      outline: none;
+      border-color: #94a3b8;
+    }
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+  }
+
+  /* Search button */
+  .search_button {
+    border-radius: 99px;
+    width: 42px;
+    transition: background 0.2s;
+    background: white;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+
+  .search_cancel {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -40px;
+    border-radius: 8px;
+    background: #ef4444;
+    border: 1px solid #f87171;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+/* Remove Logo */
+.leaflet-touch .leaflet-control-attribution {
+  display: none;
+}
+
+.leaflet-popup-content p {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.location_services {
+  list-style: none;
+}

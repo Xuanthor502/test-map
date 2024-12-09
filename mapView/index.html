@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Map View</title>
+        <link rel="stylesheet" href="../leaflet-module/leaflet.css" />
+        <link rel="stylesheet" href="../leaflet-module/leaflet-geoman.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        />
+        <script src="../leaflet-module/leaflet.js"></script>
+        <script src="../leaflet-module/leaflet-geoman.js"></script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            #map {
+                height: 100vh;
+            }
+
+            .map__btn-marker {
+                position: absolute;
+                bottom: 20px;
+                right: 20px;
+                z-index: 9999;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map">
+            <button class="map__btn-marker">Add Marker</button>
+        </div>
+
+        <script>
+            const aras = parent.aras;
+            const currentItem = parent.parent.item;
+
+            // const test1 = parent.document.getElementsByClassName("z_latitude")[0].value;
+            // const test2 = parent.document.getElementsByClassName("z_longitude")[0].value;
+
+            const btnAddMarker = document.querySelector(".map__btn-marker");
+
+            const latitudeElement = currentItem.getElementsByTagName("z_latitude")[0];
+            const longitudeElement = currentItem.getElementsByTagName("z_longitude")[0];
+            const lat = parseFloat(latitudeElement?.textContent);
+            const lng = parseFloat(longitudeElement?.textContent);
+
+            const defaultLat = lat;
+            const defaultLng = lng;
+
+            console.log({ lat, lng });
+
+            let zoomLevel = latitudeElement?.textContent && longitudeElement?.textContent ? 15 : 12;
+
+            // Initialize Map
+            const map = L.map("map", { zoomControl: false }).setView(
+                [16.0623180317, 108.213958740234],
+                zoomLevel
+            );
+
+            L.tileLayer("http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
+                maxNativeZoom: 19,
+                maxZoom: 20,
+                minZoom: 3,
+                subdomains:['mt0','mt1','mt2','mt3'],
+            }).addTo(map);
+
+            L.control
+                .zoom({
+                    position: "topright",
+                })
+                .addTo(map);
+
+            // Initialize Marker
+            let marker;
+            if (lat && lng) {
+                marker = L.marker([lat, lng], { draggable: parent.parent.isEditMode }).addTo(map);
+                handleMarkerEvent(marker);
+                map.setView([lat, lng], zoomLevel);
+            }
+
+            btnAddMarker.addEventListener("click", () => {
+                if (marker) map.removeLayer(marker);
+
+                const center = map.getCenter();
+                marker = L.marker([center.lat, center.lng], { draggable: parent.parent.isEditMode }).addTo(map);
+                handleMarkerEvent(marker);
+            });
+
+            // Function to update marker's draggable state
+            function updateMarkerDraggableState(marker) {
+                parent.parent.isEditMode
+                    ? marker.dragging.enable()
+                    : marker.dragging.disable();
+
+                setTimeout(() => updateMarkerDraggableState(marker), 100);
+            }
+
+            // function handleMonitor() {
+            //     if (!parent.parent.isEditMode) {
+            //         if (marker) {
+            //             marker.setLatLng([defaultLat, defaultLng]);
+            //         }
+            //     }
+
+            //     setTimeout(() => handleMonitor(), 100);
+            // }
+            // handleMonitor();
+
+
+            function handleMarkerEvent(marker) {
+                marker.on("drag", (e) => {
+                    const bounds = map.getBounds();
+                    let { lat, lng } = e.target.getLatLng();
+
+                    if (!bounds.contains([lat, lng])) {
+                        lat = Math.max(bounds.getSouth(), Math.min(bounds.getNorth(), lat));
+                        lng = Math.max(bounds.getWest(), Math.min(bounds.getEast(), lng));
+                        marker.setLatLng([lat, lng]);
+                    }
+                });
+
+                marker.on("dragend", function (e) {
+                    if (!parent.parent.isEditMode) return;
+                    const { lat, lng } = e.target.getLatLng();
+                    updateCoordinates(lat, lng);
+                });
+
+                updateMarkerDraggableState(marker);
+            }
+
+            // Update coordinates in the parent window
+            function updateCoordinates(lat, lng) {
+                window.parent.handleItemChange("z_latitude", lat);
+                window.parent.handleItemChange("z_longitude", lng);
+            }
+        </script>
+    </body>
+</html>
